@@ -41,33 +41,26 @@ angular.module('stockApp.controllers', [])
     };
 })
 
-.controller('mystocksCtrl', function ($scope) {
-    $scope.playlists = [
+.controller('mystocksCtrl', ["$scope", function ($scope) {
+    $scope.stockList = [
         {
-            title: 'Reggae',
-            id: 1
+            ticker: "Stock1"
         },
         {
-            title: 'Chill',
-            id: 2
+            ticker: "Stock2"
         },
         {
-            title: 'Dubstep',
-            id: 3
+            ticker: "Stock3"
         },
         {
-            title: 'Indie',
-            id: 4
+            ticker: "Stock4"
         },
         {
-            title: 'Rap',
-            id: 5
+            ticker: "Stock5"
         },
-        {
-            title: 'Cowbell',
-            id: 6
-        }
-  ];
-})
+    ];
+}])
 
-.controller('stocksCtrl', function ($scope, $stateParams) {});
+.controller('stocksCtrl', ["$scope", function ($scope, $stateParams) {
+
+}]);
