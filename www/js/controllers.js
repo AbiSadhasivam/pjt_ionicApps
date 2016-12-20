@@ -44,23 +44,45 @@ angular.module('stockApp.controllers', [])
 .controller('mystocksCtrl', ["$scope", function ($scope) {
     $scope.stockList = [
         {
-            ticker: "Stock1"
+            ticker: "AAPL"
         },
         {
-            ticker: "Stock2"
+            ticker: "GPRO"
         },
         {
-            ticker: "Stock3"
+            ticker: "FB"
         },
         {
-            ticker: "Stock4"
+            ticker: "TSLA"
         },
         {
-            ticker: "Stock5"
-        },
+            ticker: "GE"
+        }
     ];
 }])
 
-.controller('stocksCtrl', ["$scope", function ($scope, $stateParams) {
+.controller('stocksCtrl', ["$scope", "$stateParams", "$http", "stockDataService", function ($scope, $stateParams, $http, stockDataService) {
+    $scope.ticker = $stateParams.stockTicker;
+
+    $scope.$on("$ionicView.afterEnter", function () {
+        getPriceData();
+        getDetailedData();
+    });
+
+    function getPriceData() {
+        var promise = stockDataService.getPriceData($scope.ticker);
+
+        promise.then(function (data) {
+            console.log(data);
+        });
+    }
+
+    function getDetailedData() {
+        var promise = stockDataService.getDetailedData($scope.ticker);
+
+        promise.then(function (data) {
+            console.log(data);
+        });
+    }
 
 }]);

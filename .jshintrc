@@ -1,0 +1,19 @@
+{
+    "undef": true,
+    "camelcase": true,
+    "noempty": true,
+    "nonbsp": true,
+    "globals": {
+        "module": true,
+        "require": true,
+        "__dirname": true,
+        "fitKidApp": true,
+        "setTimeout": true,
+        "angular": true,
+        "document": true,
+        "process": true,
+        "window": true,
+        "module": true,
+        "cordova": true
+    }
+}

@@ -1,7 +1,7 @@
-<ion-view view-title="My Stocks">
+<ion-view view-title="My Stocks">{{stock}}
     <ion-content>
         <ion-list>
-            <ion-item ng-repeat="stock in stockList" href="#/app/playlists/{{stock.ticker}}">
+            <ion-item ng-repeat="stock in stockList" href="#/app/{{stock.ticker}}">
                 <div class="row row-center">
                     <div class="col">
                         {{stock.ticker}}
