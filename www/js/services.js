@@ -8,7 +8,7 @@ angular.module("stockApp.services", []).factory("stockDataService", function ($q
             deferred.resolve(jsonData.query.results.quote);
         }).error(function () {
             console.log("Error in retrieving the detailed data for", ticker);
-            deferred.reject();
+            deferred.reject("Error");
         });
         return deferred.promise;
     };
@@ -21,7 +21,7 @@ angular.module("stockApp.services", []).factory("stockDataService", function ($q
             deferred.resolve(jsonData.list.resources[0].resource.fields);
         }).error(function () {
             console.log("Error in retrieving the data for", ticker);
-            deferred.reject();
+            deferred.reject("error");
         });
         return deferred.promise;
     };

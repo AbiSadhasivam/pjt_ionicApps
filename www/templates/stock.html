@@ -2,24 +2,53 @@
     <div class="bar bar-subheader bar-light">
         <div class="button" side="left">
             <div class="button button-clear">
-                <h5>Company Name</h5>
+                <h5>{{stockDetailedData.Name}}</h5>
             </div>
         </div>
 
-        <h2 class="title button-left button-right">1000.500</h2>
+        <h2 class="title button-left button-right">{{stockPriceData.price}}</h2>
         <div class="button" side="right">
             <div class="button button-clear">
-                <h5>100.00%</h5>
+                <h5>{{stockPriceData.chg_percent}}%</h5>
             </div>
         </div>
     </div>
     <ion-content class="has-subheader">
+
+        <div class="button-bar">
+            <a ng-click="chartViewFunc(1)" ng-class="chartCounter == 1?'active': '' " class="button"> Day </a>
+            <a ng-click="chartViewFunc(2)" ng-class="chartCounter == 2?'active': '' " class="button">Week </a>
+            <a ng-click="chartViewFunc(3)" ng-class="chartCounter == 3?'active': '' " class="button">3M</a>
+            <a ng-click="chartViewFunc(4)" ng-class="chartCounter == 4?'active': '' " class="button">Year</a>
+            <a ng-click="chartViewFunc(5)" ng-class="chartCounter == 5?'active': '' " class="button">Max</a>
+        </div>
+        <img ng-if="chartCounter == 1" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t= 1d&q=l&l=on&z=m&a=vm" style="width:100%;">
+        <img ng-if="chartCounter == 2" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=5d&q=l&l=on&z=m&a=vm" style="width:100%;">
+        <img ng-if="chartCounter == 3" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=3m&q=l&l=on&z=m&a=vm" style="width:100%;">
+        <img ng-if="chartCounter == 4" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=1y&q=l&l=on&z=m&a=vm" style="width:100%;">
+        <img ng-if="chartCounter == 5" ng-src="http://chart.finance.yahoo.com/z?s={{ticker}}&t=my&q=l&l=on&z=m&a=vm" style="width:100%;">
+
         <div class="card">
             <div class="item item-divider">Market Data</div>
             <div class="row row-center">
-                <div class="col">Data: </div>
-                <div class="col">100.500</div>
+                <div class="col">Ask : </div>
+                <div class="col">{{stockDetailedData.Ask}}</div>
+                <div class="col">Bid : </div>
+                <div class="col">{{stockDetailedData.Bid}}</div>
             </div>
+            <div class="row row-center">
+                <div class="col">Day High : </div>
+                <div class="col">{{stockDetailedData.DaysHigh}}</div>
+                <div class="col">Day Low : </div>
+                <div class="col">{{stockDetailedData.DaysLow}}</div>
+            </div>
+            <div class="row row-center">
+                <div class="col">Year High : </div>
+                <div class="col">{{stockDetailedData.YearHigh}}</div>
+                <div class="col">Year Low : </div>
+                <div class="col">{{stockDetailedData.YearLow}}</div>
+            </div>
+
         </div>
         <div class="card">
             <div class="item item-divider">Notes</div>

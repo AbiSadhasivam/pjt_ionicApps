@@ -63,6 +63,7 @@ angular.module('stockApp.controllers', [])
 
 .controller('stocksCtrl', ["$scope", "$stateParams", "$http", "stockDataService", function ($scope, $stateParams, $http, stockDataService) {
     $scope.ticker = $stateParams.stockTicker;
+    $scope.chartCounter = 1;
 
     $scope.$on("$ionicView.afterEnter", function () {
         getPriceData();
@@ -73,7 +74,7 @@ angular.module('stockApp.controllers', [])
         var promise = stockDataService.getPriceData($scope.ticker);
 
         promise.then(function (data) {
-            console.log(data);
+            $scope.stockPriceData = data;
         });
     }
 
@@ -81,8 +82,11 @@ angular.module('stockApp.controllers', [])
         var promise = stockDataService.getDetailedData($scope.ticker);
 
         promise.then(function (data) {
-            console.log(data);
+            $scope.stockDetailedData = data;
         });
     }
 
+    $scope.chartViewFunc = function (counter) {
+        $scope.chartCounter = counter;
+    };
 }]);
