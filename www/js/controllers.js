@@ -61,7 +61,7 @@ angular.module('stockApp.controllers', [])
     ];
 }])
 
-.controller('stocksCtrl', ["$scope", "$stateParams", "$http", "stockDataService", function ($scope, $stateParams, $http, stockDataService) {
+.controller('stocksCtrl', ["$scope", "$stateParams", "$http", "stockDataService", "dateService", function ($scope, $stateParams, $http, stockDataService, dateService) {
     $scope.ticker = $stateParams.stockTicker;
     $scope.chartCounter = 1;
 

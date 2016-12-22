@@ -9,46 +9,58 @@ angular.module("stockApp.services", [])
     };
 })
 
-//.factory("dataService", function () {
-//        var encodeURI = function (URL) {
-//            return encodeURIComponent(URL).replace(/\"/g, "%22").replace(/\ /g, "%20").replace(/[!*()]/g, escape);
-//        };
-//        return {
-//            encodeURI: encodeURI
-//        };
-//    })
-    .factory("stockDataService", function ($q, $http, encodeURIService) {
+.factory("dateService", function ($filter) {
+    var currentDate = function () {
+        var d = new Date(),
+            date = $filter('date')(d, 'yyyy-MM-dd');
 
-        var getDetailedData = function (ticker) {
-            var deferred = $q.defer(),
-                query = 'select * from yahoo.finance.quotes where symbol IN ("' + ticker + '")',
-                url = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIService.encodeURI(query) + '&format=json&env=http://datatables.org/alltables.env';
+        return date;
+    };
 
-            $http.get(url).success(function (jsonData) {
-                deferred.resolve(jsonData.query.results.quote);
-            }).error(function () {
-                console.log("Error in retrieving the detailed data for", ticker);
-                deferred.reject("Error");
-            });
-            return deferred.promise;
-        };
+    var oneYearAgoDate = function () {
+        var d = new Date(new Date().serDate(new Date().getDate() - 365)),
+            date = $filter('date')(d, 'yyyy-MM-dd');
 
-        var getPriceData = function (ticker) {
-            var deferred = $q.defer(),
-                url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + "/quote?format=json&view=detail";
+        return date;
+    };
+    return {
+        currentDate: currentDate,
+        oneYearAgoDate: oneYearAgoDate
+    };
+})
 
-            $http.get(url).success(function (jsonData) {
-                deferred.resolve(jsonData.list.resources[0].resource.fields);
-            }).error(function () {
-                console.log("Error in retrieving the data for", ticker);
-                deferred.reject("error");
-            });
-            return deferred.promise;
-        };
+.factory("stockDataService", function ($q, $http, encodeURIService) {
+
+    var getDetailedData = function (ticker) {
+        var deferred = $q.defer(),
+            query = 'select * from yahoo.finance.quotes where symbol IN ("' + ticker + '")',
+            url = 'http://query.yahooapis.com/v1/public/yql?q=' + encodeURIService.encodeURI(query) + '&format=json&env=http://datatables.org/alltables.env';
+
+        $http.get(url).success(function (jsonData) {
+            deferred.resolve(jsonData.query.results.quote);
+        }).error(function () {
+            console.log("Error in retrieving the detailed data for", ticker);
+            deferred.reject("Error");
+        });
+        return deferred.promise;
+    };
+
+    var getPriceData = function (ticker) {
+        var deferred = $q.defer(),
+            url = "http://finance.yahoo.com/webservice/v1/symbols/" + ticker + "/quote?format=json&view=detail";
+
+        $http.get(url).success(function (jsonData) {
+            deferred.resolve(jsonData.list.resources[0].resource.fields);
+        }).error(function () {
+            console.log("Error in retrieving the data for", ticker);
+            deferred.reject("error");
+        });
+        return deferred.promise;
+    };
 
 
-        return {
-            getPriceData: getPriceData,
-            getDetailedData: getDetailedData
-        };
-    });
+    return {
+        getPriceData: getPriceData,
+        getDetailedData: getDetailedData
+    };
+});
